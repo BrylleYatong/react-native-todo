@@ -40,16 +40,21 @@ function UpdateToDoProvider(props: any) {
     }
 
     const handleUpdateToDo = async () => {
-        if (todo?.title === '' || todo?.description === '') return
-        const newTodo = toDoList?.map((item: any) => {
-            if (item.id === todo?.id) {
-                return todo
-            }
-            return item
-        })
-        await AsyncStorage.setItem('toDoList', JSON.stringify(newTodo));
-        setStateUpdate(!stateUpdate);
-        props?.navigation?.navigate('Home');
+        try {
+            if (todo?.title === '' || todo?.description === '') return
+            const newTodo = toDoList?.map((item: any) => {
+                if (item.id === todo?.id) {
+                    return todo
+                }
+                return item
+            })
+            await AsyncStorage.setItem('toDoList', JSON.stringify(newTodo));
+            setStateUpdate(!stateUpdate);
+            props?.navigation?.navigate('Home');
+        } catch (error) {
+            throw error
+        }
+
     }
 
     const action = {
